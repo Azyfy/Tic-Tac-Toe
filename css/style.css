@@ -1,0 +1,12 @@
+#ttt-grid {
+    height: 400px;
+    width: 400px;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: black;
+    grid-gap: 3px;
+}
+
+.ttt-place {
+    background-color: white;
+}
