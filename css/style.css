@@ -1,12 +1,21 @@
 #ttt-grid {
-    height: 400px;
-    width: 400px;
+    height: 520px;
+    width: 520px;
     display: grid;
     grid-template-columns: auto auto auto;
     background-color: black;
-    grid-gap: 3px;
+    grid-gap: 5px;
 }
 
 .ttt-place {
+    height: 170px;
+    width: 170px;
     background-color: white;
+    text-align: center
+}
+
+.XO {
+    height: 150px;
+    width: 150px;
+    margin-top: 10px;
 }
