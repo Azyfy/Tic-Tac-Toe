@@ -9,8 +9,8 @@ const gameBoard = ( () => {
             place.removeChild(place.firstChild);
             }
             gameBoard[i] = "";
-            game.reset();
         }
+        game.reset();
         render();
     }
 
@@ -28,8 +28,9 @@ const gameBoard = ( () => {
 }) ();
 
 const Player = (name, mark) => {
+    const bot = false;
 
-    return { name, mark};
+    return { name, mark, bot};
 };
 
 
@@ -39,6 +40,7 @@ const game = ( () => {
     let mark;
     let gameEnd = false;
     let drawCheck = 0;
+    let botPlayed = false;
 
     const checkWin = () => {
         drawCheck++;
@@ -74,35 +76,67 @@ const game = ( () => {
         gameEnd = false;
         drawCheck = 0;
         firstPlayed = false;
+        botPlayed = false;
+        botCheck();
+    }
+
+    const botCheck = () => {
+        if (player1.bot == true) botPlay();
+        if (player2.bot == true) checkBotPlayed();
+    }
+
+    const checkBotPlayed = () => {
+        botPlayed ? botPlayed = false : botPlayed =true;
+    }
+
+    const botPlay = () => {
+        if (gameEnd == true) return;
+        checkBotPlayed ();
+        let position = Math.round(Math.random()  * 9 );
+        while (gameBoard.gameBoard[position] != "") position = Math.round(Math.random()  * 9 );
+        playMove(position);
     }
 
     const play = () => {
+
         board.forEach( (place) => {
             place.addEventListener ("click", (e) => {
                 const position = e.target.getAttribute("data-place");
-                firstPlayed ? mark = player2.mark : mark = player1.mark;
-                if (gameEnd == true) return;
-                if (gameBoard.gameBoard[position] == "") {
-                    gameBoard.gameBoard[position] = `${mark}`;
-                    firstPlayed ? firstPlayed = false : firstPlayed = true;
-                    gameBoard.render();
-                    checkWin();
-                }
-                else {
-                    alert("Place taken!")
-                }
+                checkBotPlayed();
+                playMove(position);
                 
             });
         });
     }
 
-    return { play, reset };
+    const playMove = (position) => {
+        firstPlayed ? mark = player2.mark : mark = player1.mark;
+        if (gameEnd == true) return;
+        if (gameBoard.gameBoard[position] == "") {
+            gameBoard.gameBoard[position] = `${mark}`;
+            firstPlayed ? firstPlayed = false : firstPlayed = true;
+            gameBoard.render();
+            checkWin();
+        }
+        else {
+            alert("Place taken!")
+        }
+
+        if (player1.bot == true || player2.bot == true) {
+            if (botPlayed == false) botPlay();
+        }
+
+
+    }
+
+    return { play, botPlay, reset, checkBotPlayed };
 }) ();
 
 const controls = ( () => {
     
     const clearForm = () => {
         playerForm.style.display = "none";
+        botOptions.style.visibility = "hidden";
         document.getElementById("player1").value = "";
         document.getElementById("player2").value = "";
     }
@@ -111,10 +145,21 @@ const controls = ( () => {
         confirmBtn.addEventListener("click", () => {
         let name1 = document.getElementById("player1").value;
         let name2 = document.getElementById("player2").value;
+        let bot = document.querySelector('input[name="computer"]:checked').value;
         if (name1 == "") name1 = "Player X"
         if (name2 == "") name2 = "Player O"
         player1.name = `${name1}`
         player2.name = `${name2}`
+
+        if (bot == "X") {
+            player1.bot = true;
+            game.botPlay();
+        }
+        if (bot == "O") {
+             player2.bot = true;
+             game.checkBotPlayed();
+        }
+        
 
         clearForm();
     });
@@ -126,15 +171,26 @@ const playerForm = document.querySelector("#player-form");
 const confirmBtn = document.querySelector("#confirm");
 const closeBtn = document.querySelector("#close");
 const newGameBtn = document.querySelector("#new-game"); 
+const addBotBtn = document.querySelector("#addBot");
+const botOptions = document.querySelector("#bot-options");
+const radioBot = document.querySelectorAll(".radio-bot");
+document.getElementById("botNone").checked = true;
 const player1 = Player("Plyer X", "X");
 const player2 = Player("Player O", "O");
 
+
 newGameBtn.addEventListener("click", () => {
     gameBoard.newGame();
-})
+});
 
 closeBtn.addEventListener("click", () => {
     controls.clearForm();
 });
+
+addBotBtn.addEventListener("click", () => {
+    botOptions.style.visibility = "visible";
+});
+
+
 controls.form()
 game.play()

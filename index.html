@@ -14,20 +14,20 @@
 
     <div id="player-form">
         <span> X: </span>
-        <input type="text" name="player1" id="player1" placeholder="Player X">
+        <input type="text" name="player1" id="player1" placeholder="Player X" autocomplete="off">
         <br><br>
         <span> O: </span>
-        <input type="text" name="player2" id="player2" placeholder="Player O">
+        <input type="text" name="player2" id="player2" placeholder="Player O" autocomplete="off">
         <br><br>
         <button id="addBot"> Add computer </button>
         <br>
             <div id="bot-options">
-                <input type="radio" name="computer"> None <br>
-                <input type="radio" name="computer" value="X"> X: computer <br>
-                <input type="radio" name="computer" value="Y"> O: computer <br>
+                <input class="radio-bot" id="botNone" type="radio" name="computer" value="none" checked="checked"> None <br> 
+                <input class="radio-bot" id="botX" type="radio" name="computer" value="X" autocomplete="off"> X: computer <br>
+                <input class="radio-bot" id="botO" type="radio" name="computer" value="O" autocomplete="off"> O: computer <br>
 
-                <input type="radio" name="difficulty" value="X"> Normal <br>
-                <input type="radio" name="difficulty" value="Y"> Cant win <br>
+         <!--       <input type="radio" name="difficulty" value="X"> Normal <br>
+                <input type="radio" name="difficulty" value="Y"> Cant win <br> -->
             </div>
         <br><br>
         <button id="confirm"> Confirm </button>
