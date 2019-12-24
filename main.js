@@ -1,6 +1,18 @@
 "use strict";
 const gameBoard = ( () => { 
-    const gameBoard = ["", "", "", "", "", "", "", "", ""];
+    let gameBoard = ["", "", "", "", "", "", "", "", ""];
+
+    const newGame = () => {
+        for (let i=0; i<9; i++) {
+            if (gameBoard[i] != "") {
+            const place = document.querySelector(`#ttt-${i}`);
+            place.removeChild(place.firstChild);
+            }
+            gameBoard[i] = "";
+            game.reset();
+        }
+        render();
+    }
 
     const render = () => {
         for (let i=0; i<9; i++) {
@@ -8,11 +20,11 @@ const gameBoard = ( () => {
             const img = `<img src="./img/${gameBoard[i]}.png" alt="${gameBoard[i]}" class="XO">`;
             if (gameBoard[i] != "") {
             place.innerHTML = `${img}`;
-            } 
+            }
         }
     }
 
-    return { gameBoard, render };
+    return { gameBoard, render, newGame };
 }) ();
 
 const Player = (name, mark) => {
@@ -58,6 +70,12 @@ const game = ( () => {
         }
     }
 
+    const reset = () => {
+        gameEnd = false;
+        drawCheck = 0;
+        firstPlayed = false;
+    }
+
     const play = () => {
         board.forEach( (place) => {
             place.addEventListener ("click", (e) => {
@@ -78,11 +96,11 @@ const game = ( () => {
         });
     }
 
-    return { play };
+    return { play, reset };
 }) ();
 
 const controls = ( () => {
-
+    
     const clearForm = () => {
         playerForm.style.display = "none";
         document.getElementById("player1").value = "";
@@ -107,8 +125,13 @@ const controls = ( () => {
 const playerForm = document.querySelector("#player-form");
 const confirmBtn = document.querySelector("#confirm");
 const closeBtn = document.querySelector("#close");
+const newGameBtn = document.querySelector("#new-game"); 
 const player1 = Player("Plyer X", "X");
 const player2 = Player("Player O", "O");
+
+newGameBtn.addEventListener("click", () => {
+    gameBoard.newGame();
+})
 
 closeBtn.addEventListener("click", () => {
     controls.clearForm();
