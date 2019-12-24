@@ -5,6 +5,7 @@
     grid-template-columns: auto auto auto;
     background-color: black;
     grid-gap: 5px;
+    margin: auto;
 }
 
 .ttt-place {
@@ -18,4 +19,30 @@
     height: 150px;
     width: 150px;
     margin-top: 10px;
+}
+
+#player-form {
+    position: absolute;
+    display: block;
+    background: white;
+    left: 375px;
+    height: 450px;
+    width: 450px;
+    border: solid black 1px;
+    margin: auto;
+    padding: 50px;
+    z-index: 5;
+    text-align: center;
+}
+
+#player1, #player2 {
+    text-align: center;
+}
+
+#bot-options {
+    visibility: hidden;
+}
+
+#addBot {
+    visibility: hidden;
 }

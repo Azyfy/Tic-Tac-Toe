@@ -16,17 +16,16 @@ const gameBoard = ( () => {
 }) ();
 
 const Player = (name, mark) => {
+
     return { name, mark};
 };
 
-const player1 = Player("MrX", "X");
-const player2 = Player("MrY", "O");
 
 const game = ( () => { 
     const board = document.querySelectorAll(".ttt-place"); 
     let firstPlayed = false;
     let mark;
-    let win = false;
+    let gameEnd = false;
     let drawCheck = 0;
 
     const checkWin = () => {
@@ -39,8 +38,8 @@ const game = ( () => {
             || ( gameBoard.gameBoard[0] == "X" && gameBoard.gameBoard[3] == "X" && gameBoard.gameBoard[6] == "X"  )
             || ( gameBoard.gameBoard[1] == "X" && gameBoard.gameBoard[4] == "X" && gameBoard.gameBoard[7] == "X"  ) 
             || ( gameBoard.gameBoard[2] == "X" && gameBoard.gameBoard[5] == "X" && gameBoard.gameBoard[8] == "X"  ) ) {
-            alert("WIN")
-            win = true;
+            alert(`${player1.name} wins!`)
+            gameEnd = true;
         }
         else if (( gameBoard.gameBoard[0] == "O" && gameBoard.gameBoard[1] == "O" && gameBoard.gameBoard[2] == "O"  ) 
             || ( gameBoard.gameBoard[3] == "O" && gameBoard.gameBoard[4] == "O" && gameBoard.gameBoard[5] == "O"  ) 
@@ -50,14 +49,13 @@ const game = ( () => {
             || ( gameBoard.gameBoard[0] == "O" && gameBoard.gameBoard[3] == "O" && gameBoard.gameBoard[6] == "O"  )
             || ( gameBoard.gameBoard[1] == "O" && gameBoard.gameBoard[4] == "O" && gameBoard.gameBoard[7] == "O"  ) 
             || ( gameBoard.gameBoard[2] == "O" && gameBoard.gameBoard[5] == "O" && gameBoard.gameBoard[8] == "O"  ) ) {
-            alert("WIN")
-            win = true;
+            alert(`${player2.name} wins!`)
+            gameEnd = true;
         }
         else if (drawCheck == 9) {
             alert("Draw!")
+            gameEnd = true;
         }
-
-
     }
 
     const play = () => {
@@ -65,7 +63,7 @@ const game = ( () => {
             place.addEventListener ("click", (e) => {
                 const position = e.target.getAttribute("data-place");
                 firstPlayed ? mark = player2.mark : mark = player1.mark;
-                if (win == true) return;
+                if (gameEnd == true) return;
                 if (gameBoard.gameBoard[position] == "") {
                     gameBoard.gameBoard[position] = `${mark}`;
                     firstPlayed ? firstPlayed = false : firstPlayed = true;
@@ -83,4 +81,37 @@ const game = ( () => {
     return { play };
 }) ();
 
+const controls = ( () => {
+
+    const clearForm = () => {
+        playerForm.style.display = "none";
+        document.getElementById("player1").value = "";
+        document.getElementById("player2").value = "";
+    }
+
+    const form = () => {
+        confirmBtn.addEventListener("click", () => {
+        let name1 = document.getElementById("player1").value;
+        let name2 = document.getElementById("player2").value;
+        if (name1 == "") name1 = "Player X"
+        if (name2 == "") name2 = "Player O"
+        player1.name = `${name1}`
+        player2.name = `${name2}`
+
+        clearForm();
+    });
+    }
+    return { clearForm, form };
+}) ();
+
+const playerForm = document.querySelector("#player-form");
+const confirmBtn = document.querySelector("#confirm");
+const closeBtn = document.querySelector("#close");
+const player1 = Player("Plyer X", "X");
+const player2 = Player("Player O", "O");
+
+closeBtn.addEventListener("click", () => {
+    controls.clearForm();
+});
+controls.form()
 game.play()

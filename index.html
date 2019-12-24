@@ -9,6 +9,29 @@
 
 <body>
 
+    <div id="player-form">
+        <span> X: </span>
+        <input type="text" name="player1" id="player1" placeholder="Player X">
+        <br><br>
+        <span> O: </span>
+        <input type="text" name="player2" id="player2" placeholder="Player O">
+        <br><br>
+        <button id="addBot"> Add computer </button>
+        <br>
+            <div id="bot-options">
+                <input type="radio" name="computer"> None <br>
+                <input type="radio" name="computer" value="X"> X: computer <br>
+                <input type="radio" name="computer" value="Y"> O: computer <br>
+
+                <input type="radio" name="difficulty" value="X"> Normal <br>
+                <input type="radio" name="difficulty" value="Y"> Cant win <br>
+            </div>
+        <br><br>
+        <button id="confirm"> Confirm </button>
+        <br><br>
+        <button id="close"> Close </button>
+    </div>
+
     <div id="ttt-grid">
         <div class="ttt-place" id="ttt-0" data-place="0"></div>
         <div class="ttt-place" id="ttt-1" data-place="1"></div>
