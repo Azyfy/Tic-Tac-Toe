@@ -1,9 +1,13 @@
+body {
+    background-color: grey;
+}
+
 #ttt-grid {
     height: 520px;
     width: 520px;
     display: grid;
     grid-template-columns: auto auto auto;
-    background-color: black;
+    background-color: grey;
     grid-gap: 5px;
     margin: auto;
 }
@@ -11,7 +15,7 @@
 .ttt-place {
     height: 170px;
     width: 170px;
-    background-color: white;
+    background-color: pink;
     text-align: center
 }
 
@@ -24,15 +28,14 @@
 #player-form {
     position: absolute;
     display: block;
-    background: white;
     left: 375px;
-    height: 450px;
+    height: 425px;
     width: 450px;
-    border: solid black 1px;
     margin: auto;
     padding: 50px;
     z-index: 5;
     text-align: center;
+    background-color: pink;
 }
 
 #player1, #player2 {
@@ -41,4 +44,50 @@
 
 #bot-options {
     visibility: hidden;
+}
+
+.buttons-here {
+    position: absolute;
+    z-index: 1;
+    height: 170px;
+    width: 170px;
+    background-color: pink;
+    text-align: center;
+    margin-top: 175px;
+    margin-left: 75px;
+    visibility: hidden;
+}
+
+#display-x {
+    position: absolute;
+    z-index: 2;
+    height: 170px;
+    width: 170px;
+    background-color: pink;
+    text-align: center;
+    margin-top: 0px;
+    margin-left: 1000px;
+    visibility: hidden;
+}
+
+#display-o {
+    position: absolute;
+    z-index: 2;
+    height: 170px;
+    width: 170px;
+    background-color: pink;
+    text-align: center;
+    margin-top: 350px;
+    margin-left: 1000px;
+    visibility: hidden;
+}
+
+#x-score, #o-score {
+    font-size: xx-large;
+}
+
+#title {
+    color: pink;
+    text-decoration: underline;
+    text-align: center;
 }

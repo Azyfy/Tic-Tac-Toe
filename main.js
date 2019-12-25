@@ -29,8 +29,9 @@ const gameBoard = ( () => {
 
 const Player = (name, mark) => {
     const bot = false;
+    let win = 0;
 
-    return { name, mark, bot};
+    return { name, mark, bot, win};
 };
 
 
@@ -53,6 +54,8 @@ const game = ( () => {
             || ( gameBoard.gameBoard[1] == "X" && gameBoard.gameBoard[4] == "X" && gameBoard.gameBoard[7] == "X"  ) 
             || ( gameBoard.gameBoard[2] == "X" && gameBoard.gameBoard[5] == "X" && gameBoard.gameBoard[8] == "X"  ) ) {
             alert(`${player1.name} wins!`)
+            player1.win++;
+            controls.display();
             gameEnd = true;
         }
         else if (( gameBoard.gameBoard[0] == "O" && gameBoard.gameBoard[1] == "O" && gameBoard.gameBoard[2] == "O"  ) 
@@ -64,6 +67,8 @@ const game = ( () => {
             || ( gameBoard.gameBoard[1] == "O" && gameBoard.gameBoard[4] == "O" && gameBoard.gameBoard[7] == "O"  ) 
             || ( gameBoard.gameBoard[2] == "O" && gameBoard.gameBoard[5] == "O" && gameBoard.gameBoard[8] == "O"  ) ) {
             alert(`${player2.name} wins!`)
+            player2.win++;
+            controls.display();
             gameEnd = true;
         }
         else if (drawCheck == 9) {
@@ -133,10 +138,26 @@ const game = ( () => {
 }) ();
 
 const controls = ( () => {
+
+    const display = () => {
+        let displayXname = document.querySelector("#x-name");
+        let displayXscore = document.querySelector("#x-score");
+        let displayOname = document.querySelector("#o-name");
+        let displayOscore = document.querySelector("#o-score");
+
+        displayXname.textContent = `${player1.name}`;
+        displayOname.textContent = `${player2.name}`;
+
+        displayXscore.textContent = `${player1.win}`
+        displayOscore.textContent = `${player2.win}`
+    }
     
     const clearForm = () => {
         playerForm.style.display = "none";
         botOptions.style.visibility = "hidden";
+        buttonsHere.style.visibility = "visible";
+        displayX.style.visibility = "visible";
+        displayO.style.visibility = "visible";
         document.getElementById("player1").value = "";
         document.getElementById("player2").value = "";
     }
@@ -160,17 +181,21 @@ const controls = ( () => {
              game.checkBotPlayed();
         }
         
-
+        display();
         clearForm();
     });
     }
-    return { clearForm, form };
+    return { clearForm, form, display };
 }) ();
 
 const playerForm = document.querySelector("#player-form");
 const confirmBtn = document.querySelector("#confirm");
 const closeBtn = document.querySelector("#close");
+const buttonsHere = document.querySelector(".buttons-here");
+const displayX = document.querySelector("#display-x");
+const displayO = document.querySelector("#display-o");
 const newGameBtn = document.querySelector("#new-game"); 
+const resetGameBtn = document.querySelector("#reset-game");
 const addBotBtn = document.querySelector("#addBot");
 const botOptions = document.querySelector("#bot-options");
 const radioBot = document.querySelectorAll(".radio-bot");
@@ -181,6 +206,10 @@ const player2 = Player("Player O", "O");
 
 newGameBtn.addEventListener("click", () => {
     gameBoard.newGame();
+});
+
+resetGameBtn.addEventListener("click", () => {
+    location.reload();
 });
 
 closeBtn.addEventListener("click", () => {
