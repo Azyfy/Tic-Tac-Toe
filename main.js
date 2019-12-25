@@ -214,6 +214,7 @@ resetGameBtn.addEventListener("click", () => {
 
 closeBtn.addEventListener("click", () => {
     controls.clearForm();
+    controls.display();
 });
 
 addBotBtn.addEventListener("click", () => {
