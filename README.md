@@ -2,7 +2,7 @@
 
 A tic-tac-toe game against another player or a computer with random moves.  
 
-[Link](https://azzryel.github.io/Tic-Tac-Toe/)
+[Link](https://azyfy.github.io/Tic-Tac-Toe/)
 
 ###### Features
 - Play with another player or against a computer
